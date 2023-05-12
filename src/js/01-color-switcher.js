@@ -28,7 +28,7 @@ const disableStartBtn = () => {
   ref.startBtn.disabled = true;
 };
 const enableStopBtn = () => {
-  ref.stopBtn.npmdisabled = false;
+  ref.stopBtn.disabled = false;
 };
 const disableStopBtn = () => {
   ref.stopBtn.disabled = true;
