@@ -11,16 +11,28 @@ function clickStartBtn() {
   intervalId = setInterval(() => {
     document.body.style.backgroundColor = getRandomHexColor();
   }, 1000);
-  ref.startBtn.disabled = true;
-  ref.stopBtn.disabled = false;
+  disableStartBtn();
+  enableStopBtn();
 }
 
 function clickStopBtn() {
   clearInterval(intervalId);
-  ref.stopBtn.disabled = true;
-  ref.startBtn.disabled = false;
+  enableStartBtn();
+  disableStopBtn();
 }
-//console.log(ref.startBtn, '  ', ref.stopBtn);
+
+enableStartBtn = () => {
+  ref.startBtn.disabled = false;
+};
+disableStartBtn = () => {
+  ref.startBtn.disabled = true;
+};
+enableStopBtn = () => {
+  ref.stopBtn.disabled = false;
+};
+disableStopBtn = () => {
+  ref.stopBtn.disabled = true;
+};
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215)
