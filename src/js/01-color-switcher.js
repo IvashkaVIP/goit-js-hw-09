@@ -21,16 +21,16 @@ function clickStopBtn() {
   disableStopBtn();
 }
 
-enableStartBtn = () => {
+const enableStartBtn = () => {
   ref.startBtn.disabled = false;
 };
-disableStartBtn = () => {
+const disableStartBtn = () => {
   ref.startBtn.disabled = true;
 };
-enableStopBtn = () => {
-  ref.stopBtn.disabled = false;
+const enableStopBtn = () => {
+  ref.stopBtn.npmdisabled = false;
 };
-disableStopBtn = () => {
+const disableStopBtn = () => {
   ref.stopBtn.disabled = true;
 };
 
