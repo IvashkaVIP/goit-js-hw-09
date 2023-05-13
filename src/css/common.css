@@ -19,7 +19,17 @@ img {
 
 .timer {
   display: flex;
+  gap : 10;
 }
 .field{
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  width: 50;  
+  justify-content: center;
+}
+ .value{
+  font-size: 30;
+}
+.label{
+  font-size: 12;
 }
