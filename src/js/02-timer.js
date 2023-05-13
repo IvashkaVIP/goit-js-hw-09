@@ -7,52 +7,67 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-      console.log(selectedDates[0]);
-      console.log(options.defaultDate);
-      if (options.defaultDate >= selectedDates[0]) {
-          startBtn.disabled = true;
-          window.alert('Please choose a date in the future');
-          return;          
-      }
-      selectedTime = selectedDates[0].getTime();
-      startBtn.disabled = false;
+    // console.log(selectedDates[0]);
+    // console.log(options.defaultDate);
+    if (options.defaultDate >= selectedDates[0]) {
+      ref.startBtn.disabled = true;
+      window.alert('Please choose a date in the future');
+      return;
+    }
+    selectedTime = selectedDates[0].getTime();
+      ref.startBtn.disabled = false;
   },
 };
 
 // const targetTime = flatpickr('#datetime-picker', options);
 let selectedTime = null;
+let isActiveTimer = false;
+let timerId = null;
 
 const ref = {
   itemDays: document.querySelector('[data-days]'),
   itemHours: document.querySelector('[data-hours]'),
   itemMins: document.querySelector('[data-minutes]'),
   itemSecs: document.querySelector('[data-seconds]'),
+  dataInput: document.querySelector('#datetime-picker'),
+  startBtn: document.querySelector('[data-start]'),
 };
 
-//console.log(ref.itemDays);
 
+ ref.startBtn.disabled = true;
+//  ref.dataInput.disabled = true;
 
-const dataInput = document.querySelector('#datetime-picker');
-const startBtn = document.querySelector('[data-start]');
-dataInput.value = (new Date()).toLocaleString();
-startBtn.setAttribute('disabled', true);
 
 flatpickr('#datetime-picker', options);
 
-startBtn.addEventListener('click', onStartBtn);
+ref.startBtn.addEventListener('click', onStartBtn);
 
 function onStartBtn() {
     
-    setInterval(() => {
-        const { days, hours, minutes, seconds } = convertMs(selectedTime - Date.now());
+    isActiveTimer = true;
+    ref.dataInput.disabled = true;
+    ref.startBtn.disabled = true;
+
+
+    timerId = setInterval(() => {
+        let deltaTime = selectedTime - Date.now();
+        if (deltaTime <= 0) {
+          isActiveTimer = false;
+        //   ref.startBtn.disabled = false;
+            ref.dataInput.disabled = false;
+            clearInterval(timerId);
+            return;
+        }
+
         
-        ref.itemSecs.textContent = addLeadingZero(seconds);
-        ref.itemMins.textContent = addLeadingZero(minutes);
-        ref.itemHours.textContent = addLeadingZero(hours);
-        ref.itemDays.textContent = addLeadingZero(days);
-        //console.log(ref.itemSecs.textContent); 
-        //console.log(deltaTime);
-    },1000)
+    const { days, hours, minutes, seconds } = convertMs(deltaTime);
+
+    ref.itemSecs.textContent = addLeadingZero(seconds);
+    ref.itemMins.textContent = addLeadingZero(minutes);
+    ref.itemHours.textContent = addLeadingZero(hours);
+    ref.itemDays.textContent = addLeadingZero(days);
+    
+  }, 1000);
 }
 
 function convertMs(ms) {
@@ -75,9 +90,5 @@ function convertMs(ms) {
 }
 
 function addLeadingZero(value) {
-    return value.toString().padStart(2,"0");
-
+  return value.toString().padStart(2, '0');
 }
-
-
-
