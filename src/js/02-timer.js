@@ -39,12 +39,16 @@ ref.startBtn.addEventListener('click', onStartBtn);
 function onStartBtn() {
   ref.dataInput.disabled = true;
   ref.startBtn.disabled = true;
+  Notiflix.Notify.success("Let's Go!");
+
 
   timerId = setInterval(() => {
     let deltaTime = fp.selectedDates[0].getTime() - Date.now();
     if (deltaTime <= 0) {
       ref.dataInput.disabled = false;
       clearInterval(timerId);
+      Notiflix.Notify.success('timer finished counting down');
+
       return;
     }
 
