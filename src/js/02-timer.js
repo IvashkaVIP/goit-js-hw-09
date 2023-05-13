@@ -7,21 +7,16 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    // console.log(selectedDates[0]);
-    // console.log(options.defaultDate);
-    if (options.defaultDate >= selectedDates[0]) {
+    if (selectedDates[0].getTime() <= options.defaultDate) {
       ref.startBtn.disabled = true;
       window.alert('Please choose a date in the future');
-      return;
     }
-    selectedTime = selectedDates[0].getTime();
-      ref.startBtn.disabled = false;
+  },
+  onChange(selectedDates) {
+    ref.startBtn.disabled = selectedDates[0].getTime() <= options.defaultDate;
   },
 };
 
-// const targetTime = flatpickr('#datetime-picker', options);
-let selectedTime = null;
-let isActiveTimer = false;
 let timerId = null;
 
 const ref = {
@@ -33,40 +28,30 @@ const ref = {
   startBtn: document.querySelector('[data-start]'),
 };
 
+ref.startBtn.disabled = true;
 
- ref.startBtn.disabled = true;
-//  ref.dataInput.disabled = true;
-
-
-flatpickr('#datetime-picker', options);
+const fp = flatpickr('#datetime-picker', options);
 
 ref.startBtn.addEventListener('click', onStartBtn);
 
 function onStartBtn() {
-    
-    isActiveTimer = true;
-    ref.dataInput.disabled = true;
-    ref.startBtn.disabled = true;
+  ref.dataInput.disabled = true;
+  ref.startBtn.disabled = true;
 
+  timerId = setInterval(() => {
+    let deltaTime = fp.selectedDates[0].getTime() - Date.now();
+    if (deltaTime <= 0) {
+      ref.dataInput.disabled = false;
+      clearInterval(timerId);
+      return;
+    }
 
-    timerId = setInterval(() => {
-        let deltaTime = selectedTime - Date.now();
-        if (deltaTime <= 0) {
-          isActiveTimer = false;
-        //   ref.startBtn.disabled = false;
-            ref.dataInput.disabled = false;
-            clearInterval(timerId);
-            return;
-        }
-
-        
     const { days, hours, minutes, seconds } = convertMs(deltaTime);
 
     ref.itemSecs.textContent = addLeadingZero(seconds);
     ref.itemMins.textContent = addLeadingZero(minutes);
     ref.itemHours.textContent = addLeadingZero(hours);
     ref.itemDays.textContent = addLeadingZero(days);
-    
   }, 1000);
 }
 
