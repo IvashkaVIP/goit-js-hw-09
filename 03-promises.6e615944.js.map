@@ -1,1 +1,0 @@
-{"mappings":"gfAAAA,EAAA,Q","sources":["src/js/03-promises.js"],"sourcesContent":["import Notiflix from 'notiflix';\n\nfunction createPromise(position, delay) {\n  const shouldResolve = Math.random() > 0.3;\n  if (shouldResolve) {\n    // Fulfill\n  } else {\n    // Reject\n  }\n}\n"],"names":["parcelRequire"],"version":3,"file":"03-promises.6e615944.js.map"}
