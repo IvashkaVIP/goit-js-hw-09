@@ -1,3 +1,16 @@
+const enableStartBtn = () => {
+  ref.startBtn.disabled = false;
+};
+const disableStartBtn = () => {
+  ref.startBtn.disabled = true;
+};
+const enableStopBtn = () => {
+  ref.stopBtn.disabled = false;
+};
+const disableStopBtn = () => {
+  ref.stopBtn.disabled = true;
+};
+
 const ref = {
   startBtn: document.querySelector('[data-start]'),
   stopBtn: document.querySelector('[data-stop]'),
@@ -6,6 +19,7 @@ const ref = {
 ref.startBtn.addEventListener('click', clickStartBtn);
 ref.stopBtn.addEventListener('click', clickStopBtn);
 let intervalId = null;
+disableStopBtn();
 
 function clickStartBtn() {
   intervalId = setInterval(() => {
@@ -20,19 +34,6 @@ function clickStopBtn() {
   enableStartBtn();
   disableStopBtn();
 }
-
-const enableStartBtn = () => {
-  ref.startBtn.disabled = false;
-};
-const disableStartBtn = () => {
-  ref.startBtn.disabled = true;
-};
-const enableStopBtn = () => {
-  ref.stopBtn.disabled = false;
-};
-const disableStopBtn = () => {
-  ref.stopBtn.disabled = true;
-};
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215)

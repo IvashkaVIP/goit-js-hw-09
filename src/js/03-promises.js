@@ -29,6 +29,7 @@ function onFormSubmit(evt) {
       });
     currentDelay += +ref.inputStep.value;
   }
+   evt.currentTarget.reset();
 }
 
 function createPromise(position, delay) {
